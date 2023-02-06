@@ -6,9 +6,9 @@ Created on Mon Feb  6 11:27:39 2023
 
 Add greedy best-first search with Manhattan distance heuristic
 
-1. Initialize a priority queue (e.g. using the heapq module) instead of a stack or queue frontier.
+1. Override the remove method of queue frontier.
 2. Calculate the Manhattan distance from each node to the goal and use it as a priority for the priority queue.
-3. In each iteration, pop the node with the lowest priority (i.e. the one closest to the goal) from the priority queue instead of removing from the frontier directly.
+3. In each iteration, pop the node with the lowest cost (i.e. the one closest to the goal) from the priority queue instead of removing from the frontier directly.
 4. Also update the basename attribute to include the algorithm used (e.g. self.basename += ".gbfs").
 
 """
@@ -57,8 +57,21 @@ class QueueFrontier(StackFrontier):
             return node
 
 class PriorityFrontier(QueueFrontier):
-    
+    # Override the remove method only
     def remove(self):
+        '''
+
+        Raises
+        ------
+        empty
+            if no element in frontier.
+
+        Returns
+        -------
+        node
+            the node with lowest cost. (frontier must remove this member)
+
+        '''
         if self.empty():
             raise Exception("empty frontier")
         else:
